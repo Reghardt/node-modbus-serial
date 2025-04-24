@@ -636,14 +636,7 @@ function _onError(e) {
   this.emit("error", err);
 }
 
-/**
- * Configure GPIO DE/RE transmit control hooks
- * @param {{beforeSend?: () => void | Promise<void>, afterSend?: () => void | Promise<void>}} hooks
- */
-ModbusRTU.prototype.setTransmitControl = function (hooks) {
-  this._transmitControl.beforeSend = hooks.beforeSend || null;
-  this._transmitControl.afterSend = hooks.afterSend || null;
-};
+
 
 class ModbusRTU extends EventEmitter {
   /**
@@ -1318,6 +1311,15 @@ class ModbusRTU extends EventEmitter {
     _writeBufferToPort.call(this, buf, this._port._transactionIdWrite);
   }
 }
+
+/**
+ * Configure GPIO DE/RE transmit control hooks
+ * @param {{beforeSend?: () => void | Promise<void>, afterSend?: () => void | Promise<void>}} hooks
+ */
+ModbusRTU.prototype.setTransmitControl = function (hooks) {
+  this._transmitControl.beforeSend = hooks.beforeSend || null;
+  this._transmitControl.afterSend = hooks.afterSend || null;
+};
 
 // add the connection shorthand API
 require("./apis/connection")(ModbusRTU);
